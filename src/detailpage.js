@@ -27,6 +27,7 @@ const topBarHeight = (Platform.OS === 'ios' ? 64 : 42)
 
 
 import GoodList from './pages/GoodList'
+import DiscussList from './pages/discussList'
 
 class detailpage extends Component{
     constructor(props){
@@ -125,7 +126,7 @@ class detailpage extends Component{
                  return <GoodList onRef={(ref)=>this._goodslist = ref} headHeight={marginTop}/>
             case 'analysis':
                 return (
-                    <View />
+                    <DiscussList />
                 );
             case 'operateData':
                 return (

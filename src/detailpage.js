@@ -28,6 +28,7 @@ const topBarHeight = (Platform.OS === 'ios' ? 64 : 42)
 
 import GoodList from './pages/GoodList'
 import DiscussList from './pages/discussList'
+import HookFetchData from './pages/hookfetchdata'
 
 class detailpage extends Component{
     constructor(props){
@@ -130,7 +131,7 @@ class detailpage extends Component{
                 );
             case 'operateData':
                 return (
-                    <View />
+                    <HookFetchData />
                 );
             default:
                 return null

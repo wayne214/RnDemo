@@ -23,6 +23,10 @@ const style = {
 
 const initialState = {count: 0}
 
+const init = (initialCount) => {
+    return {count: initialCount}
+}
+
 
 const reducer =(state, action) => {
     switch (action.type) {
@@ -30,20 +34,22 @@ const reducer =(state, action) => {
             return {count: state.count + 1}
         case 'minus':
             return {count: state.count - 1}
+        case 'reset':
+            return init(action.payload)
         default:
             return state
     }
 }
 
 
-const discussItem = () => {
+const discussItem = ({initialCount = 0}) => {
     const [count, add] = useState(0)
 
     useEffect(()=>{
         console.log('加载成功', count)
     },[count])
 
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(reducer, initialCount, init)
 
 
 
@@ -71,6 +77,15 @@ const discussItem = () => {
             })}>
                 <View>
                     <Text>数量减：</Text>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=> dispatch({
+                type: 'reset',
+                payload: initialCount
+            })}>
+                <View>
+                    <Text>ReSet：</Text>
                 </View>
             </TouchableOpacity>
         </View>

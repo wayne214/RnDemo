@@ -25,30 +25,21 @@ const style = {
     }
 }
 
-
-const hookdata = () => {
-    const [data, setData] = useState({hits: []})
-
-    const [query, setQuery] = useState('react')
-
-    // const [search,setSearch] = useState('react')
-
-    const [url, setUrl] = useState(`https://hn.algolia.com/api/v1/search?query=react`)
-
+const useDataApi = (initUrl,initData) => {
+    const [data, setData] = useState(initData)
+    const [url, setUrl] = useState(initUrl)
     const [isLoading, setIsLoading] = useState(false)
-
     const [isError, setIsError] = useState(false)
 
-    useEffect(() => {
-        const fetchData = async () => {
+    useEffect(()=> {
+        const fetchData = async() => {
             setIsError(false)
             setIsLoading(true)
-
 
             try {
                 const result = await axios(url)
                 setData(result.data)
-            } catch (error) {
+            } catch (e) {
                 setIsError(true)
             }
 
@@ -56,8 +47,20 @@ const hookdata = () => {
         }
 
         fetchData()
-
     },[url])
+
+    return [{data, isLoading, isError,}, setUrl]
+}
+
+
+
+const hookdata = () => {
+    const [query, setQuery] = useState('redux')
+    const [{data, isLoading, isError}, doFetch] = useDataApi(
+        'https://hn.algolia.com/api/v1/search?query=redux',
+        {hits: []}
+    )
+
 
 
     return(
@@ -70,7 +73,7 @@ const hookdata = () => {
             <Button
                 title={'Search'}
                 color={'#841584'}
-                onPress={()=> setUrl(`http://hn.algolia.com/api/v1/search?queryD=${query}`)}
+                onPress={()=> doFetch(`http://hn.algolia.com/api/v1/search?query=${query}`)}
             />
 
             {

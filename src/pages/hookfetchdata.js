@@ -65,6 +65,8 @@ const useDataApi = (initUrl,initData) => {
     })
 
     useEffect(()=> {
+
+        let didCancel = false
         const fetchData = async() => {
             // setIsError(false)
             // setIsLoading(true)
@@ -86,18 +88,28 @@ const useDataApi = (initUrl,initData) => {
 
             try {
                 const result = await axios(url)
-                dispatch({
-                    type: 'FETCH_SUCCESS',
-                    payload: result.data
-                })
+
+                if (!didCancel) {
+                    dispatch({
+                        type: 'FETCH_SUCCESS',
+                        payload: result.data
+                    })
+                }
             }catch (e) {
-                dispatch({
-                    type: 'FETCH_FAILURE'
-                })
+                if (!didCancel) {
+                    dispatch({
+                        type: 'FETCH_FAILURE'
+                    })
+                }
             }
         }
 
         fetchData()
+
+        return ()=> {
+            didCancel = true
+        }
+
     },[url])
 
     return [state, setUrl]

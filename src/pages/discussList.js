@@ -11,7 +11,8 @@ import {
     Animated,
     RefreshControl,
     TouchableOpacity,
-    Easing
+    Easing,
+    Button
 } from 'react-native'
 let {width, height} = Dimensions.get('window')
 
@@ -23,8 +24,19 @@ class discussList extends Component{
         this.state = {
             fadeInOpacity: new Animated.Value(0), // 初始值
             rotation:new Animated.Value(0),
-            fontSize: new Animated.Value(0)
+            fontSize: new Animated.Value(0),
+
+            springValue: new Animated.Value(0)
         }
+
+        this.springAnimated = Animated.spring(
+            this.state.springValue,
+            {
+                toValue: 1,
+                friction: 3, // 弹跳系数
+                tension: 10, // 控制速度
+            }
+        )
     }
 
     componentDidMount() {
@@ -33,17 +45,21 @@ class discussList extends Component{
         //     duration: 10000,
         //     easing: Easing.linear
         // }).start()
-        let timing = Animated.timing;
-        Animated.parallel(['fadeInOpacity','rotation','fontSize'].map(
-            property => {
-                return timing(this.state[property],{
-                    toValue: 1,
-                    duration: 10000,
-                    easing: Easing.linear
-                })
-            }
-        )).start()
+        // let timing = Animated.timing;
+        // Animated.parallel(['fadeInOpacity','rotation','fontSize'].map(
+        //     property => {
+        //         return timing(this.state[property],{
+        //             toValue: 1,
+        //             duration: 10000,
+        //             easing: Easing.linear
+        //         })
+        //     }
+        // )).start()
+    }
 
+    _startAnimated =()=> {
+        this.state.springValue.setValue(0.1);
+        this.springAnimated.start();
     }
 
     render() {
@@ -70,6 +86,25 @@ class discussList extends Component{
                         color: 'red'}}>
                         悄悄的，我出现了😈💨</Animated.Text>
                 </Animated.View>
+
+                <Animated.View
+                    style={{
+                        marginTop: 50,
+                        width: 282,
+                        height: 50,
+                        transform:[
+                            {scale: this.state.springValue}
+                        ]
+                    }}
+                >
+                    <Text>哇咔咔</Text>
+                </Animated.View>
+
+                <Button
+                    title={'开始动画'}
+                    onPress={this._startAnimated}
+                />
+
             </View>
 
         )

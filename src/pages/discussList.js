@@ -23,6 +23,15 @@ import dogbg from '../images/dog.jpg'
 import glass from '../images/glasses.png'
 import necklace from '../images/necklace.jpg'
 
+
+/**
+ * Animated.delay 给定延迟后开始动画
+ * Animated.parallel 同时启动多个动画
+ * Animated.sequence 按顺序启动动画，等待每一个动画完成后在开始下一个动画
+ * Animated.stagger 按照给定的延时间隔，顺序并行的启动动画
+ *
+* */
+
 class discussList extends Component{
     constructor(props) {
         super(props)
@@ -45,8 +54,32 @@ class discussList extends Component{
 
         this.state ={
             dogOpacityValue: new Animated.Value(0),
-            dogAccValue: new Animated.Value(0)
+            dogAccValue: new Animated.Value(0),
+            redValue: new Animated.Value(0),
+            blueValue: new Animated.Value(0)
         }
+
+        this.staggerAnimated = Animated.stagger(
+            2000,
+            [
+                Animated.timing(
+                    this.state.redValue,
+                    {
+                        toValue: 1,
+                        duration: 5000,
+                        easing: Easing.in
+                    }
+                ),
+                Animated.timing(
+                    this.state.blueValue,
+                    {
+                        toValue: 1,
+                        duration: 5000,
+                        easing: Easing.in
+                    }
+                )
+            ]
+        )
 
         this.parallelAnimated = Animated.parallel(
             [
@@ -94,6 +127,11 @@ class discussList extends Component{
         this.state.dogOpacityValue.setValue(0.1);
         this.state.dogAccValue.setValue(0)
         this.parallelAnimated.start();
+
+
+        this.state.redValue.setValue(0);
+        this.state.blueValue.setValue(0)
+        this.staggerAnimated.start()
     }
 
     render() {
@@ -116,6 +154,16 @@ class discussList extends Component{
         const rotateZ = this.state.dogAccValue.interpolate({
             inputRange: [0,1],
             outputRange: ['0deg','360deg']
+        })
+
+        const redMarginLeft = this.state.redValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 200]
+        })
+
+        const blueMarginLeft = this.state.blueValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 200]
         })
 
         return(
@@ -201,6 +249,25 @@ class discussList extends Component{
                 >
                     <Image style={{width: 120, height: 25, resizeMode:'stretch'}} source={glass}/>
                 </Animated.View>
+
+
+                <Animated.View
+                    style={{
+                        width: 50,
+                        height: 50,
+                        marginLeft: redMarginLeft,
+                        backgroundColor: 'red'
+                    }}
+                />
+
+                <Animated.View
+                    style={{
+                        width: 50,
+                        height: 50,
+                        marginLeft: blueMarginLeft,
+                        backgroundColor: 'blue'
+                    }}
+                />
 
 
                 <Button

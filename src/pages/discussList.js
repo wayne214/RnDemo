@@ -18,10 +18,13 @@ let {width, height} = Dimensions.get('window')
 
 import DiscussItem from './../components/discuss/discuss'
 
+import RoundImage from 'react-native-border-radius-image'
+
 
 import dogbg from '../images/dog.jpg'
 import glass from '../images/glasses.png'
 import necklace from '../images/necklace.jpg'
+import LocalImg from "../images";
 
 
 /**
@@ -168,6 +171,8 @@ class discussList extends Component{
 
         return(
             <View style={{flex: 1}}>
+                <RoundImage size={40} source={LocalImg.bg}/>
+
                 {/*<DiscussItem/>*/}
                 {/*<Animated.View*/}
                     {/*style={[*/}

@@ -1,5 +1,5 @@
 rootProject.name = 'RnDemo'
-include ':react-native-gesture-handler'
+include ':react-native-gesture-handler', ':baiduviocemodule'
 project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
 include ':react-native-reanimated'
 project(':react-native-reanimated').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-reanimated/android')

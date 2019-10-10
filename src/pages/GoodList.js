@@ -13,6 +13,9 @@ import {
     TouchableOpacity
 } from 'react-native'
 let {width, height} = Dimensions.get('window')
+import DemoClass from '../demos/demo_class'
+import DemoHooks from '../demos/demo_hooks'
+
 export default class GoodList extends Component{
 
     constructor(props) {
@@ -57,25 +60,27 @@ export default class GoodList extends Component{
         return(
             <View style={style}>
                 <View style={{flex: 1}}>
-                    <Animated.ScrollView
-                        style={{flex: 1}}
-                        showsVerticalScrollIndicator={false}
-                        onScroll={Animated.event(
-                            [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}],
-                            {
-                                useNativeDriver: true,
-                                isInteraction: false
-                            }
-                        )}
-                        scrollEventThrottle={16}
-                    >
-                        <Animated.View style={{
-                            paddingBottom: headHeight + 46,
-                            transform: [{translateY: scrollY}]
-                        }}>
-                            {this.renderList()}
-                        </Animated.View>
-                    </Animated.ScrollView>
+                    <DemoClass/>
+                    <DemoHooks/>
+                    {/*<Animated.ScrollView*/}
+                        {/*style={{flex: 1}}*/}
+                        {/*showsVerticalScrollIndicator={false}*/}
+                        {/*onScroll={Animated.event(*/}
+                            {/*[{nativeEvent: {contentOffset: {y: this.state.scrollY}}}],*/}
+                            {/*{*/}
+                                {/*useNativeDriver: true,*/}
+                                {/*isInteraction: false*/}
+                            {/*}*/}
+                        {/*)}*/}
+                        {/*scrollEventThrottle={16}*/}
+                    {/*>*/}
+                        {/*<Animated.View style={{*/}
+                            {/*paddingBottom: headHeight + 46,*/}
+                            {/*transform: [{translateY: scrollY}]*/}
+                        {/*}}>*/}
+                            {/*{this.renderList()}*/}
+                        {/*</Animated.View>*/}
+                    {/*</Animated.ScrollView>*/}
                 </View>
             </View>
         )

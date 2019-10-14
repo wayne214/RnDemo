@@ -5423,6 +5423,13 @@ react-native-border-radius-image@^1.0.7:
   resolved "https://registry.npm.taobao.org/react-native-border-radius-image/download/react-native-border-radius-image-1.0.7.tgz?cache=0&sync_timestamp=1570513978643&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-border-radius-image%2Fdownload%2Freact-native-border-radius-image-1.0.7.tgz#8e2f0f6d1bc6033f9847017addfb0b6ef0c3bc52"
   integrity sha1-ji8PbRvGAz+YRwF63fsLbvDDvFI=
 
+react-native-cardview-wayne@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/react-native-cardview-wayne/download/react-native-cardview-wayne-1.0.1.tgz#eed9ca220077c4668528f2f0b5acb909029ae791"
+  integrity sha1-7tnKIgB3xGaFKPLwtay5CQKa55E=
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-gesture-handler@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/react-native-gesture-handler/download/react-native-gesture-handler-1.4.1.tgz#c38d9e57637b95e221722a79f2bafac62e3aeb21"
@@ -6529,6 +6536,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@^3.6.4:
+  version "3.6.4"
+  resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.6.4.tgz?cache=0&sync_timestamp=1570688315640&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
+  integrity sha1-sYdSuzeSvBoCgTNff26/G7/FuR0=
 
 ua-parser-js@^0.7.18:
   version "0.7.20"

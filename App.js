@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
+import React, {Fragment, Component} from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -14,6 +14,8 @@ import {
     View,
     Text,
     StatusBar,
+    TouchableOpacity,
+    FlatList
 } from 'react-native';
 
 import {
@@ -27,15 +29,26 @@ import {
 import DetailPage from './src/detailpage'
 
 import DemoHooks from './src/demos/demo_hooks'
+import TwoList from './src/pages/twolist'
 
-const App = () => {
-    return (
-        <View style={styles.container}>
-            <DemoHooks/>
-        </View>
+// const App = () => {
+//     return (
+//         <View style={styles.container}>
+//             <TwoList/>
+//         </View>
+//
+//     );
+// }
 
-    );
-};
+class App extends Component{
+    render() {
+        return (
+            <View style={styles.container}>
+                <TwoList/>
+            </View>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     container: {

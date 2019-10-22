@@ -14,6 +14,7 @@
     "prop-types": "^15.7.2",
     "react": "16.8.6",
     "react-native": "0.60.5",
+    "react-native-baidu-vtts": "^1.0.7",
     "react-native-border-radius-image": "^1.0.7",
     "react-native-cardview-wayne": "^1.0.1",
     "react-native-gesture-handler": "^1.4.1",

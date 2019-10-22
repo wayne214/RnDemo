@@ -5418,6 +5418,11 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha1-IcqVYTmarQ/xp3AcAWg+jKmB7cs=
 
+react-native-baidu-vtts@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npm.taobao.org/react-native-baidu-vtts/download/react-native-baidu-vtts-1.0.7.tgz?cache=0&sync_timestamp=1571717049952&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-baidu-vtts%2Fdownload%2Freact-native-baidu-vtts-1.0.7.tgz#a8b29ec59895f8416d0d5ec1cf1da2f691d35dc4"
+  integrity sha1-qLKexZiV+EFtDV7Bzx2i9pHTXcQ=
+
 react-native-border-radius-image@^1.0.7:
   version "1.0.7"
   resolved "https://registry.npm.taobao.org/react-native-border-radius-image/download/react-native-border-radius-image-1.0.7.tgz?cache=0&sync_timestamp=1570513978643&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-border-radius-image%2Fdownload%2Freact-native-border-radius-image-1.0.7.tgz#8e2f0f6d1bc6033f9847017addfb0b6ef0c3bc52"

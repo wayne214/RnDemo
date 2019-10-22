@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {View, Text, ScrollView, FlatList, StyleSheet} from 'react-native'
 
 
+
+
 //列表滚动变化监听配置
 const VIEWABILITY_CONFIG = {
 

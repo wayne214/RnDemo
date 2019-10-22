@@ -36,3 +36,15 @@ allprojects {
         jcenter()
     }
 }
+
+subprojects {
+            afterEvaluate {
+                project ->
+                    if (project.hasProperty("android")) {
+                        android {
+                            compileSdkVersion = rootProject.compileSdkVersion
+                            buildToolsVersion = rootProject.buildToolsVersion
+                        }
+                    }
+            }
+        }

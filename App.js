@@ -26,6 +26,9 @@ import {
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+
+import TTS from 'react-native-baidu-vtts'
+
 import DetailPage from './src/detailpage'
 
 import DemoHooks from './src/demos/demo_hooks'
@@ -41,10 +44,22 @@ import TwoList from './src/pages/twolist'
 // }
 
 class App extends Component{
+
+    componentDidMount() {
+        TTS.initBaiduTTS('17583433','ycsP9o7cXTRAbU6E8XIZiSe3','eNKSZwlGucOKB73GUzaRxhQNXCwFn4Cz')
+    }
+
+    _speechText = () => {
+        TTS.speak('百度语音')
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <TwoList/>
+                {/*<TwoList/>*/}
+                <TouchableOpacity onPress={this._speechText}>
+                    <Text style={{fontSize: 20, height: 30}}>测试语音</Text>
+                </TouchableOpacity>
             </View>
         );
     }

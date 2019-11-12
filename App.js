@@ -46,7 +46,7 @@ import TwoList from './src/pages/twolist'
 class App extends Component{
 
     componentDidMount() {
-        TTS.initBaiduTTS('17583433','ycsP9o7cXTRAbU6E8XIZiSe3','eNKSZwlGucOKB73GUzaRxhQNXCwFn4Cz')
+        // TTS.initBaiduTTS('17583433','ycsP9o7cXTRAbU6E8XIZiSe3','eNKSZwlGucOKB73GUzaRxhQNXCwFn4Cz')
     }
 
     _speechText = () => {
@@ -57,9 +57,10 @@ class App extends Component{
         return (
             <View style={styles.container}>
                 {/*<TwoList/>*/}
-                <TouchableOpacity onPress={this._speechText}>
-                    <Text style={{fontSize: 20, height: 30}}>测试语音</Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity onPress={this._speechText}>*/}
+                    {/*<Text style={{fontSize: 20, height: 30}}>测试语音</Text>*/}
+                {/*</TouchableOpacity>*/}
+                <DemoHooks/>
             </View>
         );
     }

@@ -1,8 +1,4 @@
 rootProject.name = 'RnDemo'
-include ':react-native-baidu-vtts'
-project(':react-native-baidu-vtts').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-baidu-vtts/android')
-include ':react-native-cardview-wayne'
-project(':react-native-cardview-wayne').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-cardview-wayne/android')
 include ':react-native-gesture-handler', ':baiduviocemodule'
 project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
 include ':react-native-reanimated'

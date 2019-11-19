@@ -188,13 +188,14 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-baidu-vtts')
-    implementation project(':react-native-cardview-wayne')
     implementation project(':react-native-gesture-handler')
     implementation project(':react-native-reanimated')
     implementation project(':@react-native-community_blur')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";

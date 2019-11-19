@@ -33,9 +33,7 @@ target 'RnDemo' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  pod 'RNCardview', :path => '../node_modules/react-native-cardview-wayne'
 
-  pod 'RNBaiduvoice', :path => '../node_modules/react-native-baidu-vtts'
 
   target 'RnDemoTests' do
     inherit! :search_paths

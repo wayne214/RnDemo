@@ -3,6 +3,47 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import Picker from 'react-native-picker'
 
 class DatePickerViews extends Component{
+
+    componentDidMount(): void {
+    }
+
+    _createDateData =()=> {
+        let date = [];
+        for(let i=1970;i<2020;i++){
+            let month = [];
+            for(let j = 1;j<13;j++){
+                let day = [];
+                if(j === 2){
+                    for(let k=1;k<29;k++){
+                        day.push(k+'日');
+                    }
+                    //Leap day for years that are divisible by 4, such as 2000, 2004
+                    if(i%4 === 0){
+                        day.push(29+'日');
+                    }
+                }
+                else if(j in {1:1, 3:1, 5:1, 7:1, 8:1, 10:1, 12:1}){
+                    for(let k=1;k<32;k++){
+                        day.push(k+'日');
+                    }
+                }
+                else{
+                    for(let k=1;k<31;k++){
+                        day.push(k+'日');
+                    }
+                }
+                let _month = {};
+                _month[j+'月'] = day;
+                month.push(_month);
+            }
+            let _date = {};
+            _date[i+'年'] = month;
+            date.push(_date);
+        }
+        return date;
+    }
+
+
     _showTimePicker =()=> {
         let years = [],
             months = [],
@@ -20,10 +61,12 @@ class DatePickerViews extends Component{
         for(let i=1;i<32;i++){
             days.push(i);
         }
-        for(let i=1;i<61;i++){
-            minutes.push(i);
+        for(let i=0;i<60;i++){
+            if(i%5 === 0) {
+                minutes.push(i);
+            }
         }
-        let pickerData = [years, months, days, ['am', 'pm'], hours, minutes];
+        let pickerData = [years, months, days, ['上午', '下午'], hours, minutes];
         let date = new Date();
         let selectedValue = [
             date.getFullYear(),
@@ -34,9 +77,13 @@ class DatePickerViews extends Component{
             date.getMinutes()
         ];
         Picker.init({
+            pickerConfirmBtnText: '确定',
+            pickerCancelBtnText: '取消',
+            pickerConfirmBtnColor: [255,92,93,1],
+            pickerCancelBtnColor: [46,46,46,1],
             pickerData,
             selectedValue,
-            pickerTitleText: 'Select Date and Time',
+            pickerTitleText: '',
             wheelFlex: [2, 1, 1, 2, 1, 1],
             onPickerConfirm: pickedValue => {
                 console.log('area', pickedValue);

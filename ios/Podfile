@@ -33,7 +33,7 @@ target 'RnDemo' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-
+  pod 'Picker', :path => '../node_modules/react-native-picker'
 
   target 'RnDemoTests' do
     inherit! :search_paths

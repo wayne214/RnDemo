@@ -32,6 +32,7 @@ import DetailPage from './src/detailpage'
 import DemoHooks from './src/demos/demo_hooks'
 import ReactView from './src/demos/react-views'
 import TwoList from './src/pages/twolist'
+import DatePickerViews from './src/demos/date-picker-views';
 
 // const App = () => {
 //     return (
@@ -48,7 +49,7 @@ class App extends Component{
     render() {
         return (
             <View style={styles.container}>
-                <ReactView/>
+                <DatePickerViews/>
             </View>
         );
     }

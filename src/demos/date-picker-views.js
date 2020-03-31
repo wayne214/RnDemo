@@ -128,15 +128,24 @@ class DatePickerViews extends Component{
 
         console.log('---dddd', monthAndDay, date.getFullYear());
 
-        let pickerData = [years, months, days, ['上午', '下午'], hours, minutes];
+        // let pickerData = [years, months, days, ['上午', '下午'], hours, minutes];
+        // let selectedValue = [
+        //     date.getFullYear(),
+        //     date.getMonth()+1,
+        //     date.getDate(),
+        //     date.getHours() > 11 ? 'pm' : 'am',
+        //     date.getHours() === 12 ? 12 : date.getHours()%12,
+        //     date.getMinutes()
+        // ];
+
+        let pickerData = [monthAndDay, ['上午', '下午'], hours, minutes];
         let selectedValue = [
-            date.getFullYear(),
-            date.getMonth()+1,
-            date.getDate(),
+            '今天',
             date.getHours() > 11 ? 'pm' : 'am',
             date.getHours() === 12 ? 12 : date.getHours()%12,
             date.getMinutes()
         ];
+
         Picker.init({
             pickerConfirmBtnText: '确定',
             pickerCancelBtnText: '取消',
@@ -145,7 +154,7 @@ class DatePickerViews extends Component{
             pickerData,
             selectedValue,
             pickerTitleText: '',
-            wheelFlex: [2, 1, 1, 2, 1, 1],
+            wheelFlex: [2, 2, 1, 1],
             onPickerConfirm: pickedValue => {
                 console.log('area', pickedValue);
             },

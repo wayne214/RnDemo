@@ -164,7 +164,6 @@ class DatePickerViews extends Component{
             onPickerConfirm: pickedValue => {
                 console.log('area', pickedValue);
                 const date = pickedValue[0]
-                const monthAndDay = date.substring(0,date.length - 2)
 
                 let dateString = ''
                 if (date === '今天'){

@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native';
 import Picker from 'react-native-picker'
 
+import moment from 'moment';
+
 import {isToday} from '../util'
 
 class DatePickerViews extends Component{
@@ -64,9 +66,11 @@ class DatePickerViews extends Component{
             days.push(i);
         }
         for(let i=0;i<60;i++){
-            if(i%5 === 0) {
-                minutes.push(i);
-            }
+            minutes.push(i);
+
+            // if(i%5 === 0) {
+            //     minutes.push(i);
+            // }
         }
 
         let date = new Date();
@@ -80,7 +84,7 @@ class DatePickerViews extends Component{
                     for(let j=1;j<30; j++){
                         let da = `2020-${i}-${j}`
                         var week = weekArray[new Date(da).getDay()]
-                        let obj = i + '月' + j + '日' +week
+                        let obj = '0'.concat(i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日' +week
                         if(isToday(da)){
                             monthAndDay.push('今天')
                         } else {
@@ -91,7 +95,7 @@ class DatePickerViews extends Component{
                     for(let j=1;j<29; j++){
                         let da = `2020-${i}-${j}`
                         var week = weekArray[new Date(da).getDay()]
-                        let obj = i + '月' + j + '日'+ week
+                        let obj = '0'.concat(i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日'+ week
                         if(isToday(da)){
                             monthAndDay.push('今天')
                         } else {
@@ -104,7 +108,7 @@ class DatePickerViews extends Component{
                     for(let j=1;j<31; j++){
                         let da = `2020-${i}-${j}`
                         var week = weekArray[new Date(da).getDay()]
-                        let obj = i + '月' + j + '日'+week
+                        let obj = (i !== 11 ? '0'.concat(i) : i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日'+week
                         if(isToday(da)){
                             monthAndDay.push('今天')
                         } else {
@@ -115,7 +119,7 @@ class DatePickerViews extends Component{
                     for(let j=1;j<32; j++){
                         let da = `2020-${i}-${j}`
                         var week = weekArray[new Date(da).getDay()]
-                        let obj = i + '月' + j + '日'+week
+                        let obj = (i < 10 ? '0'.concat(i) : i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日'+week
                         if(isToday(da)){
                             monthAndDay.push('今天')
                         } else {
@@ -141,7 +145,7 @@ class DatePickerViews extends Component{
         let pickerData = [monthAndDay, ['上午', '下午'], hours, minutes];
         let selectedValue = [
             '今天',
-            date.getHours() > 11 ? 'pm' : 'am',
+            date.getHours() > 11 ? '下午' : '上午',
             date.getHours() === 12 ? 12 : date.getHours()%12,
             date.getMinutes()
         ];
@@ -151,42 +155,68 @@ class DatePickerViews extends Component{
             pickerCancelBtnText: '取消',
             pickerConfirmBtnColor: [255,92,93,1],
             pickerCancelBtnColor: [46,46,46,1],
+            pickerBg: [255, 255, 255, 1],
+            pickerToolBarBg: [255, 255, 255, 1],
             pickerData,
             selectedValue,
             pickerTitleText: '',
-            wheelFlex: [2, 2, 1, 1],
+            wheelFlex: [2, 1, 1, 1],
             onPickerConfirm: pickedValue => {
                 console.log('area', pickedValue);
+                const date = pickedValue[0]
+                const monthAndDay = date.substring(0,date.length - 2)
+
+                let dateString = ''
+                if (date === '今天'){
+                    dateString = moment().format('YYYY-MM-DD')
+                } else {
+                    const monthAndDay = date.substring(0,date.length - 2)
+                    const dataArray = monthAndDay.split('月')
+                    const month = dataArray[0]
+                    const day = dataArray[1].substring(0, dataArray[1].length - 1)
+                    dateString = 2020 + '-' + month + '-' + day
+                }
+
+                const hour = pickedValue[1] === '上午' ? pickedValue[2] : pickedValue[2] + 12
+
+                let hours = hour < 10 ? '0'.concat(hour) : hour
+                let minutes = pickedValue[3] < 10 ? '0'.concat(pickedValue[3]) : pickedValue[3]
+
+
+                console.log('---日期--', dateString, hours, minutes )
+
+
+
             },
             onPickerCancel: pickedValue => {
                 console.log('area', pickedValue);
             },
             onPickerSelect: pickedValue => {
                 let targetValue = [...pickedValue];
-                if(parseInt(targetValue[1]) === 2){
-                    if(targetValue[0]%4 === 0 && targetValue[2] > 29){
-                        targetValue[2] = 29;
-                    }
-                    else if(targetValue[0]%4 !== 0 && targetValue[2] > 28){
-                        targetValue[2] = 28;
-                    }
-                }
-                else if(targetValue[1] in {4:1, 6:1, 9:1, 11:1} && targetValue[2] > 30){
-                    targetValue[2] = 30;
-
-                }
-                // forbidden some value such as some 2.29, 4.31, 6.31...
-                if(JSON.stringify(targetValue) !== JSON.stringify(pickedValue)){
-                    // android will return String all the time，but we put Number into picker at first
-                    // so we need to convert them to Number again
-                    targetValue.map((v, k) => {
-                        if(k !== 3){
-                            targetValue[k] = parseInt(v);
-                        }
-                    });
-                    Picker.select(targetValue);
-                    pickedValue = targetValue;
-                }
+                // if(parseInt(targetValue[1]) === 2){
+                //     if(targetValue[0]%4 === 0 && targetValue[2] > 29){
+                //         targetValue[2] = 29;
+                //     }
+                //     else if(targetValue[0]%4 !== 0 && targetValue[2] > 28){
+                //         targetValue[2] = 28;
+                //     }
+                // }
+                // else if(targetValue[1] in {4:1, 6:1, 9:1, 11:1} && targetValue[2] > 30){
+                //     targetValue[2] = 30;
+                //
+                // }
+                // // forbidden some value such as some 2.29, 4.31, 6.31...
+                // if(JSON.stringify(targetValue) !== JSON.stringify(pickedValue)){
+                //     // android will return String all the time，but we put Number into picker at first
+                //     // so we need to convert them to Number again
+                //     targetValue.map((v, k) => {
+                //         if(k !== 3){
+                //             targetValue[k] = parseInt(v);
+                //         }
+                //     });
+                //     Picker.select(targetValue);
+                //     pickedValue = targetValue;
+                // }
             }
         });
         Picker.show();

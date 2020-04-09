@@ -5,6 +5,7 @@ import Picker from 'react-native-picker'
 import moment from 'moment';
 
 import {isToday} from '../util'
+import {_initDateTimePikerData} from '../util/pickerData'
 
 class DatePickerViews extends Component{
 
@@ -48,107 +49,34 @@ class DatePickerViews extends Component{
     }
 
 
-    _showTimePicker =()=> {
-        let years = [],
-            months = [],
-            days = [],
-            hours = [],
-            minutes = [];
-
-        for(let i=1;i<51;i++){
-            years.push(i+1980);
-        }
-        for(let i=1;i<13;i++){
-            months.push(i);
-            hours.push(i);
-        }
-        for(let i=1;i<32;i++){
-            days.push(i);
-        }
-        for(let i=0;i<60;i++){
-            minutes.push(i);
-
-            // if(i%5 === 0) {
-            //     minutes.push(i);
-            // }
-        }
-
-        let date = new Date();
-        let year = date.getFullYear()
+    _dateFormatArray = (i, j, weekArray, maxDateTime, minDateTime) => {
         let monthAndDay = []
-
-        var weekArray = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六");
-        for(let i= 1; i<13; i++){
-            if(i === 2) {
-                if(year%4 === 0 && ((year % 100) !== 0) || ((year % 400) === 0)){
-                    for(let j=1;j<30; j++){
-                        let da = `2020-${i}-${j}`
-                        var week = weekArray[new Date(da).getDay()]
-                        let obj = '0'.concat(i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日' +week
-                        if(isToday(da)){
-                            monthAndDay.push('今天')
-                        } else {
-                            monthAndDay.push(obj);
-                        }
-                    }
-                }else {
-                    for(let j=1;j<29; j++){
-                        let da = `2020-${i}-${j}`
-                        var week = weekArray[new Date(da).getDay()]
-                        let obj = '0'.concat(i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日'+ week
-                        if(isToday(da)){
-                            monthAndDay.push('今天')
-                        } else {
-                            monthAndDay.push(obj);
-                        }
-                    }
-                }
+        let da = `2020-${i}-${j}`
+        let currentTime = new Date(da).getTime()
+        if ((currentTime <= maxDateTime) && (currentTime >= minDateTime)) {
+            var week = weekArray[new Date(da).getDay()]
+            let obj = '0'.concat(i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日' +week
+            if(isToday(da)){
+                monthAndDay.push('今天')
             } else {
-                if (i in {4:1, 6:1, 9:1, 11:1}) {
-                    for(let j=1;j<31; j++){
-                        let da = `2020-${i}-${j}`
-                        var week = weekArray[new Date(da).getDay()]
-                        let obj = (i !== 11 ? '0'.concat(i) : i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日'+week
-                        if(isToday(da)){
-                            monthAndDay.push('今天')
-                        } else {
-                            monthAndDay.push(obj);
-                        }
-                    }
-                } else {
-                    for(let j=1;j<32; j++){
-                        let da = `2020-${i}-${j}`
-                        var week = weekArray[new Date(da).getDay()]
-                        let obj = (i < 10 ? '0'.concat(i) : i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日'+week
-                        if(isToday(da)){
-                            monthAndDay.push('今天')
-                        } else {
-                            monthAndDay.push(obj);
-                        }
-                    }
-                }
+                monthAndDay.push(obj);
             }
         }
 
-        console.log('---dddd', monthAndDay, date.getFullYear());
+        return monthAndDay
+    }
 
-        // let pickerData = [years, months, days, ['上午', '下午'], hours, minutes];
-        // let selectedValue = [
-        //     date.getFullYear(),
-        //     date.getMonth()+1,
-        //     date.getDate(),
-        //     date.getHours() > 11 ? 'pm' : 'am',
-        //     date.getHours() === 12 ? 12 : date.getHours()%12,
-        //     date.getMinutes()
-        // ];
-
-        let pickerData = [monthAndDay, ['上午', '下午'], hours, minutes];
+    _showTimePicker =()=> {
+        let date = new Date();
+        let year = date.getFullYear()
         let selectedValue = [
             '今天',
             date.getHours() > 11 ? '下午' : '上午',
             date.getHours() === 12 ? 12 : date.getHours()%12,
             date.getMinutes()
         ];
+
+        const pickerData = _initDateTimePikerData()
 
         Picker.init({
             pickerConfirmBtnText: '确定',

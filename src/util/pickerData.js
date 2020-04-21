@@ -1,6 +1,23 @@
 import moment from 'moment';
 import {isToday} from './index';
 
+const dataArray = (monthAndDay, maxDateTime, minDateTime, weekArray, year,i, maxValue) => {
+    for(let j=1;j<maxValue; j++){
+        let da = `${year}-${i}-${j}`
+        const currentTime = moment(da).format('x')
+        if ((currentTime <= maxDateTime) && (currentTime >= minDateTime)) {
+            var week = weekArray[new Date(da.replace(/-/g, '/')).getDay()]
+            let obj = '0'.concat(i) + '月' + (j < 10 ? '0'.concat(j) : j) + '日' +week
+            if(isToday(da.replace(/-/g, '/'))){
+                monthAndDay.push('今天')
+            } else {
+                monthAndDay.push(obj);
+            }
+        }
+    }
+}
+
+
 export const _initDateTimePikerData = () => {
     let years = [],
         months = [],

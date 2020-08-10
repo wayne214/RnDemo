@@ -8,7 +8,6 @@
 
 import React, {Fragment, Component} from 'react';
 import {
-    SafeAreaView,
     StyleSheet,
     ScrollView,
     View,
@@ -26,6 +25,8 @@ import {
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {SafeAreaView} from 'react-native-safe-area-context'
+
 
 import DetailPage from './src/detailpage'
 
@@ -33,6 +34,7 @@ import DemoHooks from './src/demos/demo_hooks'
 import ReactView from './src/demos/react-views'
 import TwoList from './src/pages/twolist'
 import DatePickerViews from './src/demos/date-picker-views';
+import TextDemo from './src/text';
 
 // const App = () => {
 //     return (
@@ -44,58 +46,18 @@ import DatePickerViews from './src/demos/date-picker-views';
 // }
 
 class App extends Component{
-
+    constructor() {
+        super();
+    }
 
     render() {
         return (
-            <View style={styles.container}>
-                <DatePickerViews/>
+            <View style={{backgroundColor: '#ff0', flex: 1}}>
+                <Text style={{color: 'blue', fontSize: 30}}>测试</Text>
             </View>
+
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 100
-    },
-    scrollView: {
-        backgroundColor: Colors.lighter,
-    },
-    engine: {
-        position: 'absolute',
-        right: 0,
-    },
-    body: {
-        backgroundColor: Colors.white,
-    },
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
-    },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: Colors.black,
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-        color: Colors.dark,
-    },
-    highlight: {
-        fontWeight: '700',
-    },
-    footer: {
-        color: Colors.dark,
-        fontSize: 12,
-        fontWeight: '600',
-        padding: 4,
-        paddingRight: 12,
-        textAlign: 'right',
-    },
-});
 
 export default App;

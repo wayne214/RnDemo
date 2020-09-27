@@ -49,11 +49,11 @@ class App extends Component{
     constructor() {
         super();
     }
-
+    
     render() {
         return (
-            <View style={{backgroundColor: '#ff0', flex: 1}}>
-                <Text style={{color: 'blue', fontSize: 30}}>测试</Text>
+            <View style={{backgroundColor: '#fff', flex: 1, paddingTop: 40}}>
+                <DemoHooks/>
             </View>
 
         );

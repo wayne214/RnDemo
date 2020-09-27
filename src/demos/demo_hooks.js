@@ -1,98 +1,112 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {
     Text,
     View,
-    TouchableOpacity,
-    Picker,
     FlatList,
-    UIManager,
-    findNodeHandle,
-    NativeModules,
 } from 'react-native';
+import axios from 'axios'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-// import CardView from 'react-native-cardview-wayne'
+const fetchDataReducer = (state, action) => {
+    switch(action.type){
+        case 'FETCH_INIT':
+            return{
+                ...state,
+                isLoading: true,
+                isError: false
+            }
+        case 'FETCH_SUCCESS':
+            return {
+                ...state,
+                isLoading: false,
+                isErroe: false,
+                data: action.payload,
+            }
+        case 'FETCH_ERROR':
+            return {
+                ...state,
+                isLoading: false,
+                isErroe: false,
+                data: action.payload,
+            }
+            break;
+        default:
+            return state;
+    }
+}
 
-const demoHooks = () => {
-    // 初始值
-    const [text, setText] = useState('this is hook demo');
-    const [data, setData] = useState([]);
-    const [position, setPosition] = useState(0);
-
-    const buttonEl = useRef([0, 1, 2, 3].map(() => React.createRef()));
+const useDataApi = (initUrl, initData) => {
+    const [url, setUrl] = useState(initUrl);
+    const [state, dispatch] = useReducer(fetchDataReducer,{
+        data: initData,
+        isLoading: false,
+        isErroe: false
+    })
     // 副作用
     useEffect(() => {
-        console.log('加载后，调用的', text);
-        setData(this.getData());
-
-        // UIManager.measure(findNodeHandle(this.text),(x,y, width, height, pageX, pageY)=> {
-        //     console.log('位置，', y, pageY)
-        // })
-
-
-    }, []);
-
-    getData = () => {
-        let data = [];
-        for (let i = 0; i < 4; i++) {
-            data.push(i);
-        }
-        return data;
-    };
-
-    // 方法
-    _changeTheDefaultText = () => {
-        return setText('this is the new text');
-    };
-
-
-    _renderItem = ({item}) => {
-        console.log('rowData', item);
-        return <View style={{flexDirection: 'row', height: 50, width: 200}}>
-            <TouchableOpacity onPress={() => {
-                buttonEl.current[item].current.measureInWindow((x, y, width, height) => {
-                    console.log('位置', x, y, width, height);
-                });
-
+        let doCancel = false;
+        const fetchData = async () => {
+            dispatch({type: 'FETCH_INIT'})
+            try{
+                const result =  await axios(url);
+                if(!doCancel){
+                    dispatch({type: 'FETCH_SUCCESS', payload: result.data})
+                }
+            }catch(error){
+                if(!doCancel){
+                    dispatch({type: 'FETCH_ERROR'})
+                }
             }
-            }>
-                <View ref={buttonEl.current[item]} style={{opacity: 1}}>
-                    <Text style={{height: 20, width: 60}}>{item}</Text>
+        }
+        fetchData();
+
+        return ()=>{
+            doCancel = true;
+        }
+
+    },[url]);
+
+    return [state, setUrl];
+}
+
+
+const demoHooks = () => {
+    const [search, setSearch] = useState('react')
+    // 初始值
+    const [{data, isLoading,isError}, fetchData ] = useDataApi(
+        'https://hn.algolia.com/api/v1/search?query=redux',
+        {hits: []});
+    _renderItem = ({item}) => {
+        return(
+            <View style={{height: 50, backgroundColor: '#ff0', borderBottomColor: '#f0f', borderBottomWidth: 1, justifyContent: 'center'}}>
+                    <Text style={{height: 20, width: 300}}>{item.title}</Text>
+            </View>
+        )
+    };
+    _search = () => {
+        fetchData(`https://hn.algolia.com/api/v1/search?query=${search}`)
+    }
+    return (
+        <View style={{backgroundColor: '#f5f5f5', marginTop: 20, flex: 1}}>
+            <TouchableOpacity onPress={this._search}>
+                <View style={{backgroundColor: '#f00', paddingHorizontal: 10, paddingVertical: 5}}>
+                    <Text>Search</Text>
                 </View>
             </TouchableOpacity>
-
-        </View>;
-    };
-
-
-    return (
-        <View style={{backgroundColor: '#f5f5f5'}}>
-            {/*<Text style={{fontSize: 20, color: 'red'}}>{text}</Text>*/}
-            {/*<TouchableOpacity onPress={_changeTheDefaultText}>*/}
-            {/*<Text style={{fontSize: 20, color: 'red'}}>改变文字</Text>*/}
-            {/*</TouchableOpacity>*/}
-            {/*<CardView*/}
-            {/*style={{marginHorizontal: 12}}*/}
-            {/*cardElevation={4}*/}
-            {/*maxCardElevation={4}*/}
-            {/*radius={10}*/}
-            {/*backgroundColor={'#ffffff'}>*/}
-            {/*<View style={{padding:10, margin: 12}}>*/}
-            {/*<View>*/}
-            {/*<Text>ReactNative CardView for iOS and Android</Text>*/}
-            {/*</View>*/}
-            {/*<View>*/}
-            {/*<Text>This is test</Text>*/}
-            {/*</View>*/}
-            {/*</View>*/}
-            {/*</CardView>*/}
-
-            <FlatList
-                data={data}
+            {
+                isError && <View style={{backgroundColor: 'pink', flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{color: '#f00', fontSize: 30}}>网络请求出错了...</Text>
+                </View>
+            }
+            {
+                isLoading ? <View style={{backgroundColor: 'pink', flex:1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{color: '#f00', fontSize: 30}}>The Data is Loading ...</Text>
+                </View> : <FlatList
+                data={data.hits}
                 renderItem={this._renderItem}
             />
-
+            }
         </View>
     );
 };
-
 export default demoHooks;

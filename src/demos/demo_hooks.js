@@ -59,11 +59,9 @@ const useDataApi = (initUrl, initData) => {
             }
         }
         fetchData();
-
         return ()=>{
             doCancel = true;
         }
-
     },[url]);
 
     return [state, setUrl];
